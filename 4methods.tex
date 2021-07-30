@@ -1,0 +1,46 @@
+
+\subsection{Listen}
+
+The Listen operation uses a Bidirectional Long Short Term Memory RNN (BLSTM) [15, 16,2] with a pyramidal structure. This modification is required to reduce the length $U$ of $\mathbf{h}$, from $T$, the length of the input $\mathrm{x}$, because the input speech signals can be hundreds to thousands of frames long. A direct application of BLSTM for the operation Listen converged slowly and produced results inferior to those reported here, even after a month of training time. This is presumably because the operation AttendAndSpell has a hard time extracting the relevant information from a large number of input time steps. We circumvent this problem by using a pyramidal BLSTM (pBLSTM). In each successive stacked pBLSTM layer, we reduce the time resolution by a factor of $2 .$ In a typical deep BLSTM architecture, the output at the $i$ -th time step, from the $j$ -th layer is computed as follows:
+
+$$
+h_{i}^{j}=\operatorname{BLSTM}\left(h_{i-1}^{j}, h_{i}^{j-1}\right)
+$$
+
+In the pBLSTM model, we concatenate the outputs at consecutive steps of each layer before feeding it to the next layer, i.e.:
+
+$$
+h_{i}^{j}=\operatorname{pBLSTM}\left(h_{i-1}^{j},\left[h_{2 i}^{j-1}, h_{2 i+1}^{j-1}\right]\right)
+$$
+
+In our model, we stack 3 pBLSTMs on top of the bottom BLSTM layer to reduce the time resolution $2^{3}=8$ times. This allows the attention model (described in the next section) to extract the relevant information from a smaller number of times steps. In addition to reducing the resolution, the deep architecture allows the model to learn nonlinear feature representations of the data. See Figure 1 for a visualization of the pBLSTM.
+
+The pyramidal structure also reduces the computational complexity. The attention mechanism in the speller $U$ has a computational complexity of $O(U S)$. Thus, reducing $U$ speeds up learning and inference significantly. Other neural network architectures have been described in literature with similar motivations, including the hierarchical RNN [17], clockwork RNN [18] and CNN [19].
+
+\subsection{Attend and Spell}
+
+The AttendAndSpell function is computed using an attentionbased LSTM transducer $[10,12]$. At every output step, the transducer produces a probability distribution over the next character conditioned on all the characters seen previously. The distribution for $y_{i}$ is a function of the decoder state $s_{i}$ and context $c_{i}$. The decoder state $s_{i}$ is a function of the previous state $s_{i-1}$, the previously emitted character $y_{i-1}$ and context $c_{i-1}$. The context vector $c_{i}$ is produced by an attention mechanism. Specifically,
+
+$$
+\begin{aligned}
+c_{i} &=\operatorname{AttentionContext}\left(s_{i}, \mathbf{h}\right) \\
+s_{i} &=\operatorname{RNN}\left(s_{i-1}, y_{i-1}, c_{i-1}\right) \\
+P\left(y_{i} \mid \mathbf{x}, y_{<i}\right) &=\text { CharacterDistribution }\left(s_{i}, c_{i}\right)
+\end{aligned}
+$$
+
+where CharacterDistribution is an MLP with softmax outputs over characters, and where RNN is a 2 layer LSTM.
+
+At each time step, $i$, the attention mechanism, AttentionContext generates a context vector, $c_{i}$ encapsulating the information in the acoustic signal needed to generate the next character. The attention model is content based - the contents of the decoder state $s_{i}$ are matched to the contents of $h_{u}$ representing time step $u$ of $\mathbf{h}$, to generate an attention vector $\alpha_{i}$. The vectors $h_{u}$ are linearly blended using $\alpha_{i}$ to create $c_{i}$.
+
+Specifically, at each decoder timestep $i$, the AttentionContext function computes the scalar energy $e_{i, u}$ for each time step $u$, using vector $h_{u} \in \mathbf{h}$ and $s_{i}$. The scalar energy $e_{i, u}$ is converted into a probability distribution over times steps (or attention) $\alpha_{i}$ using a softmax function. The softmax probabilities are used as mixing weights for blending the listener features $h_{u}$ to the context vector $c_{i}$ for output time step $i$ :
+
+$$
+\begin{aligned}
+e_{i, u} &=\left\langle\phi\left(s_{i}\right), \psi\left(h_{u}\right)\right\rangle \\
+\alpha_{i, u} &=\frac{\exp \left(e_{i, u}\right)}{\sum_{u^{\prime}} \exp \left(e_{i, u^{\prime}}\right)} \\
+c_{i} &=\sum_{u} \alpha_{i, u} h_{u}
+\end{aligned}
+$$
+
+where $\phi$ and $\psi$ are MLP networks. After training, the $\alpha_{i}$ distribution is typically very sharp and focuses on only a few frames of $\mathbf{h} ; c_{i}$ can be seen as a continuous bag of weighted features of $\mathbf{h}$. Figure 1 shows the LAS architecture.
