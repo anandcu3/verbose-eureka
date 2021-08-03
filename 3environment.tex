@@ -1,13 +1,27 @@
 \chapter{Large Scale Speech Recognition}
 \label{chapter:largescale}
 
-\section{Importance of large scale systems}
-\section{How much data is "large"?}
-\section{Challenges with increasing scale}
-\section{Related Large scale ASR works}
-\section{Dataset for large scale ASR}
-\subsection{Business Speech Dataset}
-\subsection{Dataset Handling methods}
-\subsubsection{Sharding}
-\subsubsection{Sequential access}
-\subsubsection{TAR advantages}
+End to end speech recognition models are highly data hungry. \cite{Li2020OnRecognition}. Modern ASR systems have been designed to work in multiple domain and environment conditions, and this robustness is possible due to the usage of larger and larger datasets. One of the largest datasets that has been publicized is the 162,000 hours dataset from Google's research team. In their work, they have attempted to build a domain invariant speech recognition model using the large dataset\cite{Narayanan2019TowardTraining}. Other applications include multi-lingual ASR models \cite{Kannan2019Large-ScaleModel} and highly accurate domain specific ASR models. These experiments showcase the ability of the ASR systems to perform at high levels by using more and more data. An observation from almost all of these works is that the researches are limited to an industrial domain and published by Google, Microsoft, etc which have fewer budget constraint than other researchers in the domain of ASR. In the academic domain, the amount of research done in this direction is limited due to the resource constrains concerning disk storage, GPU resource, CPU resources, network communication and availability of datasets. 
+
+\section{Scaling up training}
+The major factor in the magnitude at which DNNs have grown is due to the increase in scaling of training them. There are three main dimensions in which this can be done. First is the magnitude of training data. The model performance can be improved by feeding more data to the deep neural network during training \cite{HestnessDEEPEMPIRICALLY}. The definition of a "large scale" dataset specific to speech recognition is ever-changing. For some context, a popular research in 2014 \cite{Hannun2014DeepRecognition}, used 5000 hours of training data and more recent research in 2020 \cite{Li2020OnRecognition}, researchers have used 160,000 hours of training data with random augmentation techniques for each epoch. In the previous 7 years, the training data used has grown by 32x. Increasing the amount of high-quality training data hence is one of the straightforward ways to improve performance of deep learning models. Hence, the practice of adding more and more training data will continue through the next few years \cite{MayerRuben2020ScalableInfrastructures}. 
+
+The second dimension is the scale of the infrastructure. The easily available parallel hardware, especially graphics processing units (GPUs), has proven to be a great enabler to train DNNs in shorter times than before \cite{ZhangPoseidon:Clusters}. This is due to the reducing costs of hardware resources and due to the boost in cloud computing. Storing and handling data have become cheaper and easier. GPU resources have become cheaper, which have enabled researchers to use more data for training of deep neural networks. 
+
+The third dimension is the size of the DNN models, by increasing the width and depth of the models, DNN models have increased in complexity to achieve tremendous accuracies \cite{DeanLargeNetworks}. 
+
+\section{Distributed Training}
+To be competitive, it is clear that models have to be more complex and has to be trained on large datasets. Such huge training tasks can take models a few weeks or even months on a single GPU to reach convergence. To increase the throughput of the training system, one of the straightforward  methods is by increasing the amount of resources, which include the number of GPUs available. This should also go along with tight integration of hardware elements to improve the throughput of the system. \cite{Langer2020DistributedPerspective}
+
+Data transmissions across machines are slow when performing transactions that are vital to train a network. During training a deep neural network using SGD, the weights have to be synchronized across all the devices in use. As the amount if GPUs in the system grows, the overhead also grows with it. Hence, network communication across machine and across GPUs is one of the primary bottlenecks in a distributed setup.  \cite{Langer2020DistributedPerspective}
+
+The second bottleneck that exists
+\subsection{Model and data Parallelism}
+
+\subsection{Related Large scale ASR}
+
+\section{Business Speech Dataset}
+
+\subsection{Sharding}
+\subsection{Sequential access}
+\subsection{TAR advantages}

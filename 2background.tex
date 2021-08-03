@@ -2,21 +2,21 @@
 \label{chapter:background} 
 
 \section{Overview}
-This chapter aims to focus on the fundamental concepts for the rest of the chapters. We begin with introducing traditional speech recognition systems and then compare them with end to end speech recognition system in Section \ref{section:asr}. Then we discuss the challenges associated with training an end to end speech recognition model and discuss the different types of deep neural networks used in an ASR application.
+This chapter aims to focus on the fundamental concepts for the rest of the chapters. We begin with introducing hybrid speech recognition systems and then compare them with end to end speech recognition system in Section \ref{section:asr}. Then we discuss the challenges associated with training an end to end speech recognition model and discuss the different types of deep neural networks used in an ASR application.
 
 \section{Speech Recognition}
 \label{section:asr}
 
-\subsection{Traditional speech recognition systems}
-\label{section:tradasr}
-Tradition methods of speech recognition use multiple steps which include feature generation, acoustic modelling, language modelling and a variety of other methods which then combine to form one pipeline which provides accurate and precise speech to text results. Figure \ref{fig:trad_asr_model} shows this architecture.
+\subsection{Hybrid speech recognition systems}
+\label{section:hybridasr}
+Hybrid method of speech recognition use multiple steps which include feature generation, acoustic modelling, language modelling and a variety of other methods which then combine to form one pipeline which provides accurate and precise speech to text results. Figure \ref{fig:hyrid_asr_model} shows this architecture.
 
 \begin{figure}[ht]
   \begin{center}
     % below the size of the figure has been reduced for example
-    \includegraphics[width=\textwidth]{images/Tradition ASR System.pdf} 
-    \caption{A traditional ASR system architecture}
-    \label{fig:trad_asr_model}
+    \includegraphics[width=\textwidth]{images/Hybrid ASR System.pdf} 
+    \caption{A hybrid ASR system architecture}
+    \label{fig:hyrid_asr_model}
   \end{center}
 \end{figure}
 
@@ -24,7 +24,7 @@ In the above architecture, the first step is preprocessing the speech signal to 
 
 \subsection{End to end speech recognition systems}
 \label{section:e2easr}
-In end to end speech recognition systems, a single model, usually based on deep learning, supersedes the traditional ASR system stages. A deep learning model combined with an external language model can achieve higher performance than traditional speech pipelines, while being simple to train. These systems rely on large neural networks and are trained on multiple GPUs and thousands of hours of speech data. Since the system learns from the data directly, specialized components for capturing finer details of the speaker or other noise filtering components are not essential. On the contrary, previous experiments have shown that end to end models stand out in the cases where robustness is crucial. \cite{Hannun2014DeepRecognition}. 
+In end to end speech recognition systems, a single model, usually based on deep learning, supersedes the hybrid ASR system stages. A deep learning model combined with an external language model can achieve higher performance than hybrid speech pipelines, while being simple to train. These systems rely on large neural networks and are trained on multiple GPUs and thousands of hours of speech data. Since the system learns from the data directly, specialized components for capturing finer details of the speaker or other noise filtering components are not essential. On the contrary, previous experiments have shown that end to end models stand out in the cases where robustness is crucial. \cite{Hannun2014DeepRecognition}. 
 
 \emph{In an end to end deep learning ASR system, we can achieve performance gains by improving three main components: model architecture, training data and computational infrastructure. The focus of this thesis is hence to increase the scale of data while making maximum use of the available computational resources, and trying out various experiments with different model architectures to analyse the effect it has on final performance of the system.}
 
@@ -78,6 +78,19 @@ where the $w$ terms denote weight matrices, the $b$ terms denote bias vectors an
 The drawback of an RNN is that they use only the previous output to get the current context, but for speech recognition there is value to also utilize the future states too. A more advanced variation of RNN is hence a Bidirectional RNN (BRNN) \cite{Schuster1997BidirectionalNetworks} processing of the input happens in both directions using two hidden layers and then this used as input to a single output layer. 
 
 \subsubsection{Long-Term Short Memory (LSTM)}
+By modifying the RNN architecture, a Long short-term memory (LSTM) cell \cite{Hochreiter1997LongMemory} passes another state vector to the next time step, along with the hidden state. The cell state variable enables the useful long term based information to be preserved because this is modified only when there is new information. To control the cell state, gates which multiply a signal that is 1 or 0 is used. Each gate has a weight matrix which are trained by iterating over the input data. The original work use two gates which are "input" gate, which control what information is essential and hence adds to the current state, and "output" gate which control what information needs to be written to the hidden state. More recently, a third gate called a "forget" gate controls deleting the unwanted information  from the cell state to stop cells growing in a boundless manner. \cite{Gers2000LearningLSTM}.
+
+\begin{figure}[ht]
+  \begin{center}
+    % below the size of the figure has been reduced for example
+    \includegraphics[width=\textwidth]{images/lstm.png} 
+    \caption{A basic LSTM cell for a single time step \cite{Enarvi2018ModelingRecognition}}
+    \label{fig:lstm}
+  \end{center}
+\end{figure}
+
+Figure \ref{fig:lstm} shows the architecture of an LSTM layer with all the three gates. The three gates take in identical input, which also depends on how the definition of the network. In most cases, the input to LSTM cell is the combination of the hidden state of the previous time step ($c_{t-1}$) and the output of the previous layer. Each gate contains 2 weight matrices, one each for the two inputs, and a bias vector. (Figure \ref{fig:lstm} shows only a weight matrix per gate.) 
+
 
 \subsection {Convolutional Neural Networks}
 Convolutional neural network (CNN) is a branch of neural networks, which are hierarchical in nature and rely on convolution operations to process input. CNNs specialize in performing tasks like image classification, object detection, etc on images and videos. CNNs perform well when spatial features are important to perform the given task. \cite{KrizhevskyImageNetNetworks}
@@ -128,5 +141,3 @@ This defined the end to end nature of the LAS models because it generates a prob
 The connectionist temporal classification criteria is a way of training end-to-end models when the target sequence and the input sequence don't match exactly in length. It eliminates the need to align the target labels on a frame to frame basis with the input training signal. 
 
 From the previous encoder-decoder architecture, the difference is that the conditional probability of the output character at each time step, the encoder output embeddings $\mathbf{h}$, are then fed to a softmax layer which considers the whole set of blank-augmented output symbols to predict a probability distribution output similar in nature to the typical encode decoder output.
-
-\section{Large-Scale Training}
