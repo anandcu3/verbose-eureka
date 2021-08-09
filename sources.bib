@@ -12,6 +12,15 @@
     author = {Vaswani, Ashish and Brain, Google and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, Łukasz and Polosukhin, Illia}
 }
 
+@article{Jia2018BeyondNetworks,
+    title = {{Beyond Data and Model Parallelism for Deep Neural Networks}},
+    year = {2018},
+    author = {Jia, Zhihao and Zaharia, Matei and Aiken, Alex},
+    month = {7},
+    url = {https://arxiv.org/abs/1807.05358v1},
+    arxivId = {1807.05358}
+}
+
 @article{Schuster1997BidirectionalNetworks,
     title = {{Bidirectional Recurrent Neural Networks}},
     year = {1997},
@@ -63,6 +72,17 @@
     arxivId = {1412.5567}
 }
 
+@misc{Mirhoseini2017DeviceLearning,
+    title = {{Device Placement Optimization with Reinforcement Learning}},
+    year = {2017},
+    author = {Mirhoseini, Azalia and Pham, Hieu and Le, Quoc V. and Steiner, Benoit and Larsen, Rasmus and Zhou, Yuefeng and Kumar, Naveen and Norouzi, Mohammad and Bengio, Samy and Dean, Jeff},
+    month = {7},
+    pages = {2430--2439},
+    publisher = {PMLR},
+    url = {http://proceedings.mlr.press/v70/mirhoseini17a.html},
+    issn = {2640-3498}
+}
+
 @article{Langer2020DistributedPerspective,
     title = {{Distributed Training of Deep Learning Models: A Taxonomic Perspective}},
     year = {2020},
@@ -96,10 +116,40 @@
     keywords = {Machine Learning}
 }
 
+@book{Xiao2018Gandiva:Learning,
+    title = {{Gandiva: Introspective Cluster Scheduling for Deep Learning}},
+    year = {2018},
+    booktitle = {Proceedings of the 13th USENIX Symposium on Operating Systems Design and Implementation (OSDI ’18)},
+    author = {Xiao, Wencong and Bhardwaj, Romil and Ramjee, Ramachandran and Sivathanu, Muthian and Kwatra, Nipun and Han, Zhenhua and Patel, Pratyush and Peng, Xuan and Zhao, Hanyu and Zhang, Quanlu and Yang, Fan and Zhou, Lidong},
+    number = {18},
+    pages = {595--610},
+    url = {https://www.usenix.org/conference/osdi18/presentation/klimovic},
+    isbn = {978-1-939133-08-3}
+}
+
+@article{CuiGeePS:Server,
+    title = {{GeePS: Scalable deep learning on distributed GPUs with a GPU-specialized parameter server}},
+    journal = {Proceedings of the Eleventh European Conference on Computer Systems},
+    author = {Cui, Henggang and Zhang, Hao and Ganger, Gregory R and Gibbons, Phillip B and Xing, Eric P},
+    publisher = {ACM},
+    url = {http://dx.doi.org/10.1145/2901318.2901323},
+    address = {New York, NY, USA},
+    doi = {10.1145/2901318}
+}
+
 @article{KrizhevskyImageNetNetworks,
     title = {{ImageNet Classification with Deep Convolutional Neural Networks}},
     author = {Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
     url = {http://code.google.com/p/cuda-convnet/}
+}
+
+@book{Mai2020KungFu:Adaptive,
+    title = {{KungFu: Making Training in Distributed Machine Learning Adaptive}},
+    year = {2020},
+    author = {Mai, Luo and Li, Guo and Wagenl{\"{a}}nder, Marcel and Fertakis, Konstantinos and Brabete, Andrei-Octavian and Pietzuch, Peter},
+    pages = {937--954},
+    url = {www.usenix.org/conference/osdi20/presentation/mai},
+    isbn = {978-1-939133-19-9}
 }
 
 @article{DeanLargeNetworks,
@@ -187,11 +237,44 @@
     keywords = {Index Terms: end-to-end, RNN-transducer, attention-based encoder-decoder, transformer}
 }
 
+@article{Krizhevsky2014OneNetworks,
+    title = {{One weird trick for parallelizing convolutional neural networks}},
+    year = {2014},
+    author = {Krizhevsky, Alex},
+    month = {4},
+    url = {https://arxiv.org/abs/1404.5997v2},
+    arxivId = {1404.5997}
+}
+
+@article{Peng2018Optimus:Clusters,
+    title = {{Optimus: An Efficient Dynamic Resource Scheduler for Deep Learning Clusters}},
+    year = {2018},
+    journal = {Proceedings of the 13th EuroSys Conference, EuroSys 2018},
+    author = {Peng, Yanghua and Bao, Yixin and Chen, Yangrui and Wu, Chuan and Guo, Chuanxiong},
+    month = {4},
+    pages = {14},
+    volume = {2018-January},
+    publisher = {Association for Computing Machinery, Inc},
+    url = {https://doi.org/10.1145/3190508.3190517},
+    doi = {10.1145/3190508.3190517},
+    keywords = {Resource management; deep learning}
+}
+
 @article{ZhangPoseidon:Clusters,
     title = {{Poseidon: An Efficient Communication Architecture for Distributed Deep Learning on GPU Clusters}},
     author = {Zhang, Hao and Xu, Shizhen and Dai, Wei and Liang, Xiaodan and Hu, Zhiting and Wei, Jinliang and Xie, Pengtao and Zheng, Zeyu and Ho, Qirong and Xing, Eric P},
     url = {https://www.usenix.org/conference/atc17/technical-sessions/presentation/zhang},
     isbn = {978-1-931971-38-6}
+}
+
+@book{Chilimbi2014ProjectSystem,
+    title = {{Project Adam: Building an Efficient and Scalable Deep Learning Training System}},
+    year = {2014},
+    booktitle = {Big Learning Workshop},
+    author = {Chilimbi, Trishul and Suzue, Yutaka and Apacible, Johnson and Kalyanaraman, Karthik},
+    pages = {571--582},
+    url = {http://www.istc-cc.cmu.edu/publications/papers/2013/ps.pdf},
+    isbn = {978-1-931971-16-4}
 }
 
 @article{DengRECENTMICROSOFT,
@@ -205,11 +288,11 @@
     author = {Hagner, Johan}
 }
 
-@article{MayerRuben2020ScalableInfrastructures,
+@article{Mayer2020ScalableInfrastructures,
     title = {{Scalable Deep Learning on Distributed Infrastructures}},
     year = {2020},
     journal = {ACM Computing Surveys (CSUR)},
-    author = {{MayerRuben} and {JacobsenHans-Arno}},
+    author = {Mayer, Ruben and Jacobsen, Hans-Arno},
     number = {1},
     month = {2},
     volume = {53},
@@ -244,6 +327,19 @@
     publisher = {Institute of Electrical and Electronics Engineers Inc.},
     url = {https://arxiv.org/abs/1712.01769v6},
     arxivId = {1712.01769}
+}
+
+@article{Mayer2017ThePath,
+    title = {{The tensor flow partitioning and scheduling problem: It's the critical path!}},
+    year = {2017},
+    journal = {DIDL 2017 - Proceedings of the 1st Workshop on Distributed Infrastructures for Deep Learning, Part of Middleware 2017},
+    author = {Mayer, Ruben and Mayer, Christian and Laich, Larissa},
+    month = {12},
+    pages = {1--6},
+    publisher = {Association for Computing Machinery, Inc},
+    url = {https://doi.org/10.1145/3154842.3154843},
+    doi = {10.1145/3154842.3154843},
+    keywords = {Critical path, Partitioning, Scheduling, Tensor flow}
 }
 
 @article{Narayanan2019TowardTraining,
