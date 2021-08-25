@@ -6,6 +6,7 @@ End to end speech recognition models are highly data hungry. \cite{Li2020OnRecog
 \section{Scaling up training}
 The major factor in the magnitude at which DNNs have grown is due to the increase in scaling of training them. There are three main dimensions in which this can be done. First is the magnitude of training data. The model performance can be improved by feeding more data to the deep neural network during training \cite{HestnessDEEPEMPIRICALLY}. The definition of a "large scale" dataset specific to speech recognition is ever-changing. For some context, a popular research in 2014 \cite{Hannun2014DeepRecognition}, used 5000 hours of training data and more recent research in 2020 \cite{Li2020OnRecognition}, researchers have used 160,000 hours of training data with random augmentation techniques for each epoch. In the previous 7 years, the training data used has grown by 32x. Increasing the amount of high-quality training data hence is one of the straightforward ways to improve performance of deep learning models. Hence, the practice of adding more and more training data is projected to continue through the next few years \cite{Mayer2020ScalableInfrastructures}. 
 
+
 The second dimension is the scale of the infrastructure. The easily available parallel hardware, especially graphics processing units (GPUs), has proven to be a great enabler to train DNNs in shorter times than before \cite{ZhangPoseidon:Clusters}. This is due to the reducing costs of hardware resources and due to the boost in cloud computing. Storing and handling data have become cheaper and easier. GPU resources have become cheaper, which have enabled researchers to use more data for training of deep neural networks. 
 
 The third dimension is the size of the DNN models, by increasing the width and depth of the models, DNN models have increased in complexity to achieve tremendous accuracies \cite{DeanLargeNetworks}. 
@@ -46,12 +47,56 @@ In data parallelism, copy the deep neural network into different devices and loa
   \end{center}
 \end{figure}
 
-Since on each device processes a mini batch of data, the total batch size is the product of the mini batch with the number of GPUs. This high data scale leads to poor convergence. The other drawback is that ideally the data that is split along the different workers needs to be identically distributed, so that the parameter updates by the different workers can be easily synchronized to get the overall model \cite{Jia2018BeyondNetworks}.
+Since on each device processes a mini batch of data, the total batch size is the product of the mini batch with the number of GPUs. This high data scale leads to poor convergence. The other drawback is that ideally, the data that is split along the different workers needs to be identically distributed, so that the parameter updates by the different workers can be easily synchronized to get the overall model \cite{Jia2018BeyondNetworks}.
 
 The major benefit of data parallelism is that it can be easily applied to most of the deep learning networks without much specific knowledge about the architecture of the model. It is highly scalable for the cases when the training is compute intensive but have relatively few parameters like RNNs, CNNs \cite{Krizhevsky2014OneNetworks}.
 
-\subsection{Related Large scale ASR}
 
+\subsection{Types of synchronization}
+Due to the multiple nodes trying to update the model, the important question then becomes when to synchronize the parameters between the parallel workers. The main trade off is between managing training convergence and quality with synchronization cost to update all the models on the parallel workers. There are mainly two methods which are discussed here: synchronous and asynchronous methods.
+
+\subsubsection{Synchronous}
+The workers synchronize the weight updates after every batch of data processed. This is implemented in some of the first and prominent methods, like the Bulk Synchronous Parallel (BSP) \cite{Valiant1990AComputation} method, which is already available in popular data analytics platforms. The main advantage is that the model convergence is easier due to the strict nature of synchronization. However, this method is vulnerable to a situation where \emph{one} single worker stalls the entire training process, especially when the different nodes in the system are heterogeneous in nature \cite{CiparSolvingStaleness}.
+
+Synchronous training is already available in many open-source DL frameworks, such
+as TensorFlow \cite{AbadiTensorFlow:Systems} and PyTorch \cite{Paszke2019PyTorch:Library}. Most ideally, it is best suited for a single node with multi GPUs where there are minimal delays from communication and due to the workers being run on the same node stragglers are not a significant issue.
+
+\subsubsection{Asynchronous}
+The workers update the model parameters completely independent of other workers. Asynchronous training relies on the theoretical characteristic of SGD that the model convergence is robust to the random ordering of data. The model used by a worker at some point of time might be a stale model because there are no binding guarantees. This makes it difficult to assess model convergence using asynchronous training. However, the advantage is that the workers enjoy great levels of flexibility during training hence avoiding the straggler problem that is faced in the synchronous method.
+
+\emph{Hogwild} \cite{NiuHOGWILD:Descent} is one implementation of the asynchronous training of parallel SGD. Hogwild works by providing all the workers access to a shared memory space, which consists of the model parameters. This is completely lock-free, and hence seems dangerous because new model parameters from one worker can be completely overwritten by another worker without being used at all. Nevertheless, their work show that since model updates are anyway random in nature when done sequentially, Hogwild also can achieve stellar performance. This has been applied to large neural networks with good results \cite{Deyringer2017ParallelizationHogwild}. 
+
+
+\subsection{Data Parallel Systems Architecture}
+The architecture of the system defines \emph{how} the parameters are synchronised among different workers. There are three major considerations for the system architecture. Firstly, the architecture must be able to scale up to many parallel workers to update the DL model and also read the updated DL model. Secondly, the system needs to be configurable, that is to be able to manage different parameter settings, etc. The third aspect is to be compatible with widely available inter process communication primitives.
+
+\begin{figure}[ht]
+  \begin{center}
+    % below the size of the figure has been reduced for example
+    \includegraphics[width=\textwidth]{images/architecture_.png} 
+    \caption{Diagram of Parameter Server architecture and Decentralised Architecture  \cite{Mayer2020ScalableInfrastructures}}
+    \label{fig:arch}
+  \end{center}
+\end{figure}
+
+
+\subsubsection{Centralised: Parameter Server}
+Centralized architecture consists of a parameter server which is located (logically) in the centre and the worker nodes updates their computed gradients to the central server and all the workers then read the updated model to update their replicas of the model. This architecture is one of the most commonly used in a data parallel system. It is also common to use parameter shards to accelerate the process of communicating the parameter updates. This architecture is shown in Figure \ref{fig:arch}
+
+\subsubsection{Decentralized: \inlinecode{allreduce} Operation}
+Decentralised architecture operates without a Parameter Server. The parameters are synchronised directly by using an \inlinecode{allreduce} operation as shown in Figure \ref{fig:arch}. 
+
+The major benefit of using a decentralized architecture is that there is no need for one node reserved for parameter server and the effort required to implement and maintain it. There is also no single point of failure, and this makes it easier to manage fault tolerance. The major drawback of the decentralized architecture is that communication increased exponentially with the increase in number of workers. One way to avoid this is to use partial gradient updates. For each synchronization, every worker sends a partition of the gradients to every other worker, this maybe be that it sends different partitions to different workers.  The communication costs now depend on the number of partitions \emph{and} also on the number of workers in the system. 
+
+Both of these architectures in general are widely adopted in leading open-source deep learning frameworks, however the decentralised architecture is the most suitable architecture for a system where there is a single node with multiple GPUs attached because communication on the same node doesn't cost much. However, for multinode training centralised architecture is preferred. 
+
+A quick overview of practical considerations for different types of architecture, parallelism and synchronization strategy can be accessed here \footnote{Distributed training with TensorFlow, TensorFlow Core. WebPage accessed on 22.8.2021. https://www.tensorflow.org/guide/distributed\_training}. 
+
+
+\section{Related Large scale ASR}
+For some context, a popular research in 2014 \cite{Hannun2014DeepRecognition}, used 5000 hours of training data and more recent research in 2020 \cite{Li2020OnRecognition}, researchers have used 160,000 hours of training data with random augmentation techniques for each epoch. 
+ 
+ 
 \section{Business Speech Dataset}
 
 \subsection{Sharding}
