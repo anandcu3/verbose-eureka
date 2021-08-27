@@ -139,7 +139,7 @@ $$
 This defined the end to end nature of the LAS models because it generates a probability distribution for the output characters sequence right from the input signal. 
 
 \subsubsection{Connectionist Temporal Classification}
-The connectionist temporal classification criteria is a way of training end-to-end models when the target sequence and the input sequence don't match exactly in length. It eliminates the need to align the target labels on a frame to frame basis with the input training signal. 
+The connectionist temporal classification criteria is a way of training end-to-end models when the target sequence and the input sequence do not match exactly in length. It eliminates the need to align the target labels on a frame to frame basis with the input training signal. 
 
 From the previous encoder-decoder architecture, the difference is that the conditional probability of the output character at each time step, the encoder output embeddings $\mathbf{h}$, are then fed to a softmax layer which considers the whole set of blank-augmented output symbols to predict a probability distribution output similar in nature to the typical encode decoder output.
 
@@ -158,7 +158,7 @@ The SpeechBrain's core functionalities revolve around the \inlinecode{Brain} cla
   \end{center}
 \end{figure}
 
-Training of most DNN models can be completed with a few lines of code. The Brain class also handles repetitive boilerplate code. It also takes care of validation, learning rate scheduling, recoverable fault tolerant checkpointing etc. Code for training a model is written in a python script and run from the command line with the combination of a configuration file: 
+Training of most DNN models can be completed with a few lines of code. The Brain class also handles repetitive boilerplate code. It also takes care of validation, learning rate scheduling, recoverable fault tolerant checkpointing etc. Training a model happens through a python script and run from the command line with the combination of a configuration file: 
 \begin{verbatim} python train.py train.yaml\end{verbatim}
 
 \subsection{HyperPyYAML}
@@ -169,7 +169,7 @@ epoch_counter: !new:speechbrain.utils.epoch_loop.EpochCounter
     limit: 100
 \end{verbatim}
 
-This tag with prefix \inlinecode{!new:} creates an instance of the specified class. If the node is a mapping node, like in the example above, the items are passed as keyword arguments to the class.
+This tag with prefix \inlinecode{!new:} creates an instance of the specified class with an option to pass keyword arguments by using a mapping node like in the example above.
 
 The next extension is the use of prefix, \inlinecode{!name} which simplifies the creation of an interface for specifying a function or class or other static Python entity. Below is an example using that.
 \begin{verbatim}
