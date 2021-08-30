@@ -162,7 +162,7 @@ Training of most DNN models can be completed with a few lines of code. The Brain
 \begin{verbatim} python train.py train.yaml\end{verbatim}
 
 \subsection{HyperPyYAML}
-The configuration file is in YAML format which is human-readable and can be used to define the model architecture, the data files, the parameters of the model, hyperparameters for training and other characteristics of the pipeline. SpeechBrain utilities HyperPyYAML \footnote{speechbrain/HyperPyYAML:  Extensions  to  YAML  syntax  for  better python interaction. https://github.com/speechbrain/HyperPyYAML} which makes several extensions to the default YAML file format. The most important addition out of them is the easier object creation. An example:
+The configuration file is in YAML format which is human-readable and can be used to define the model architecture, the data files, the parameters of the model, hyperparameters for training and other characteristics of the pipeline. SpeechBrain utilities HyperPyYAML \footnote{speechbrain/HyperPyYAML:  Extensions  to  YAML  syntax  for  better python interaction. \href{https://github.com/speechbrain/HyperPyYAML}{https://github.com/speechbrain/HyperPyYAML} } which makes several extensions to the default YAML file format. The most important addition out of them is the easier object creation. An example:
 
 \begin{verbatim}
 epoch_counter: !new:speechbrain.utils.epoch_loop.EpochCounter
