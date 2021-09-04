@@ -1,17 +1,137 @@
-\chapter{First appendix}
-\label{chapter:first-appendix}
+\chapter{Model architecture}
+\label{chapter:model-architecture}
 
-This is the first appendix. You could put some test images or verbose data in an
-appendix, if there is too much data to fit in the actual text nicely.
+\section{Encoder Architecture}
 
-For now, the Aalto logo variants are shown in Figure~\ref{fig:aaltologo}.
+\begin{verbatim}
+CRDNN(
+  (CNN): Sequential(
+    (block_0): CNN_Block(
+      (conv_1): Conv2d(
+        (conv): Conv2d(1, 128, kernel_size=(3, 3), 
+                        stride=(1, 1))
+      )
+      (norm_1): LayerNorm(
+        (norm): LayerNorm((40, 128), eps=1e-05, 
+                            elementwise_affine=True)
+      )
+      (act_1): LeakyReLU(negative_slope=0.01)
+      (conv_2): Conv2d(
+        (conv): Conv2d(128, 128, kernel_size=(3, 3), 
+                        stride=(1, 1))
+      )
+      (norm_2): LayerNorm(
+        (norm): LayerNorm((40, 128), eps=1e-05, 
+                        elementwise_affine=True)
+      )
+      (act_2): LeakyReLU(negative_slope=0.01)
+      (pooling): Pooling1d(
+        (pool_layer): MaxPool2d(kernel_size=(1, 2), 
+                            stride=(1, 2), padding=(0, 0), 
+                            dilation=(1, 1), ceil_mode=False)
+      )
+      (drop): Dropout2d(
+        (drop): Dropout2d(p=0.15, inplace=False)
+      )
+    )
+    (block_1): CNN_Block(
+      (conv_1): Conv2d(
+        (conv): Conv2d(128, 256, kernel_size=(3, 3), 
+                        stride=(1, 1))
+      )
+      (norm_1): LayerNorm(
+        (norm): LayerNorm((20, 256), 
+                            eps=1e-05, elementwise_affine=True)
+      )
+      (act_1): LeakyReLU(negative_slope=0.01)
+      (conv_2): Conv2d(
+        (conv): Conv2d(256, 256, kernel_size=(3, 3), 
+                        stride=(1, 1))
+      )
+      (norm_2): LayerNorm(
+        (norm): LayerNorm((20, 256), eps=1e-05, 
+                        elementwise_affine=True)
+      )
+      (act_2): LeakyReLU(negative_slope=0.01)
+      (pooling): Pooling1d(
+        (pool_layer): MaxPool2d(kernel_size=(1, 2), 
+                            stride=(1, 2), padding=(0, 0), 
+                            dilation=(1, 1), ceil_mode=False)
+      )
+      (drop): Dropout2d(
+        (drop): Dropout2d(p=0.15, inplace=False)
+      )
+    )
+  )
+  (time_pooling): Pooling1d(
+    (pool_layer): MaxPool2d(kernel_size=(1, 4), 
+                    stride=(1, 4), padding=(0, 0), 
+                    dilation=(1, 1), ceil_mode=False)
+  )
+  (RNN): LSTM(
+    (rnn): LSTM(2560, 512, num_layers=4, 
+            batch_first=True, dropout=0.15, bidirectional=True)
+  )
+  (DNN): Sequential(
+    (block_0): DNN_Block(
+      (linear): Linear(
+        (w): Linear(in_features=1024, 
+                    out_features=256, bias=True)
+      )
+      (norm): BatchNorm1d(
+        (norm): BatchNorm1d(256, eps=1e-05, 
+                    momentum=0.1, affine=True, 
+                    track_running_stats=True)
+      )
+      (act): LeakyReLU(negative_slope=0.01)
+      (dropout): Dropout(p=0.15, inplace=False)
+    )
+    (block_1): DNN_Block(
+      (linear): Linear(
+        (w): Linear(in_features=256, out_features=256, 
+                    bias=True)
+      )
+      (norm): BatchNorm1d(
+        (norm): BatchNorm1d(256, eps=1e-05, 
+                        momentum=0.1, affine=True, 
+                        track_running_stats=True)
+      )
+      (act): LeakyReLU(negative_slope=0.01)
+      (dropout): Dropout(p=0.15, inplace=False)
+    )
+  )
+)
+\end{verbatim}
 
-\begin{figure}
-\begin{center}
-\subfigure[In English]{\includegraphics[width=.8\textwidth]{images/aalto-logo-en}}
-\subfigure[Suomeksi]{\includegraphics[width=.8\textwidth]{images/aalto-logo-fi}}
-\subfigure[På svenska]{\includegraphics[width=.8\textwidth]{images/aalto-logo-se}}
-\caption{Aalto logo variants}
-\label{fig:aaltologo}
-\end{center}
-\end{figure}
+
+\section{Decoder Architecture}
+
+\begin{verbatim}
+AttentionalRNNDecoder(
+  (proj): Linear(in_features=1024, out_features=512, bias=True)
+  (attn): LocationAwareAttention(
+    (mlp_enc): Linear(in_features=256, 
+                    out_features=512, bias=True)
+    (mlp_dec): Linear(in_features=512,
+                    out_features=512, bias=True)
+    (mlp_attn): Linear(in_features=512, 
+                    out_features=1, bias=False)
+    (conv_loc): Conv1d(1, 10, kernel_size=(201,), 
+                    stride=(1,), padding=(100,), 
+                    bias=False)
+    (mlp_loc): Linear(in_features=10, 
+                    out_features=512, bias=True)
+    (mlp_out): Linear(in_features=256, 
+                    out_features=512, bias=True)
+    (softmax): Softmax(dim=-1)
+  )
+  (drop): Dropout(p=0.15, inplace=False)
+  (rnn): GRUCell(
+    (rnn_cells): ModuleList(
+      (0): GRUCell(640, 512)
+    )
+    (dropout_layers): ModuleList()
+  )
+)
+
+\end{verbatim}

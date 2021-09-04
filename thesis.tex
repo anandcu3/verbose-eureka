@@ -73,7 +73,7 @@
 % Note that the option pdftext is used for pdflatex; there is no
 % pdflatex option. 
 % ------------------------------------------------------------------
-\documentclass[12pt,a4paper,oneside,pdftex]{report}
+\documentclass[12pt,a4paper,oneside,pdftex,dvipsnames]{report}
 
 % The input files (tex files) are encoded with the latin-1 encoding 
 % (ISO-8859-1 works). Change the latin1-option if you use UTF8 
@@ -147,8 +147,7 @@
 % you want to use this environment. 
 % \usepackage{alltt}
 
-% The eurosym package provides a euro symbol. Use with \euro{}
-\usepackage{eurosym} 
+
 
 % Verbatim provides a standard teletype environment that renderes
 % the text exactly as written in the tex file. Useful for code
@@ -203,7 +202,9 @@
 \usetikzlibrary{shapes}
 \usetikzlibrary{patterns}
 
-
+%display grid for preview
+%\usepackage[grid]{eso-pic}
+%\usepackage{kantlipsum}
 % The aalto-thesis package provides typesetting instructions for the
 % standard master's thesis parts (abstracts, front page, and so on)
 % Load this package second-to-last, just before the hyperref package.
@@ -233,7 +234,14 @@
 \RequirePackage[pdfa]{hyperref}
 % Setup hyperref so that links are clickable but do not look 
 % different
-\hypersetup{colorlinks=false,raiselinks=false,breaklinks=true}
+
+\usepackage[]{xcolor}
+%\newcommand\myshade{85}
+%\colorlet{mylinkcolor}{violet}
+%\colorlet{mycitecolor}{yellow-orange}
+%\colorlet{myurlcolor}{Aquamarine}
+
+\hypersetup{colorlinks=true, citecolor=YellowOrange, linkcolor=violet, urlcolor=TealBlue}
 \hypersetup{pdfborder={0 0 0}}
 \hypersetup{bookmarksnumbered=true}
 % The following line suggests the PDF reader that it should show the 
@@ -243,6 +251,9 @@
 % set a bit later on, after the thesis setup.   
 
 
+\usepackage[toc,acronym, nonumberlist]{glossaries}
+
+\makeglossaries
 % Thesis setup
 % ==================================================================
 % Change these to fit your own thesis.
@@ -403,8 +414,6 @@
 \coverpage{english}
 
 \cleardoublepage
-\input{declaration}
-\cleardoublepage
 \input{quote}
 \cleardoublepage
 \input{acknowledgements}
@@ -416,10 +425,12 @@
 
 % Abstract in English
 % ------------------------------------------------------------------
+%\addcontentsline{toc}{chapter}{Abstract in English}
 \thesisabstract{english}{
 The abstract provides goal, motivation, background, and conclusions of the work. It has to fit to one page together with the bibliographical information. If the thesis is in English and the language of school education is Finnish or Swedish, the abstract is written in English and in Finnish or in Swedish. If the language of school education is other than Finnish or Swedish, the abstract is written in English only. The thesis example file (\texttt{thesis-example.tex}), all the chapter content files (\texttt{1introduction.tex} and so on), and the Aalto style file (\texttt{aalto-thesis.sty}) are commented with explanations on how the Aalto thesis works. The files also contain some examples on how to customize various details of the thesis layout, and of course the example text works as an example in itself. Please read the comments and the example text; that should get you well on your way! In the thesis template, you can find the text of the abstract in the abstract in the \texttt{thesis-example.tex} file, together with the bibliographical information of the abstract tables. \fixme{This is an example how to use fixme: add your abstract here.}  Fixme is a command that helps you identify parts of your thesis that still require some work.
 }
 
+%\addcontentsline{toc}{chapter}{Abstract in German}
 % Abstract in Finnish
 % ------------------------------------------------------------------
 \thesisabstract{german}{
@@ -427,6 +438,8 @@ The abstract provides goal, motivation, background, and conclusions of the work.
 
 }
 
+\cleardoublepage
+\input{declaration}
 % Abstract in Swedish
 % ------------------------------------------------------------------
 %\thesisabstract{swedish}{
@@ -474,9 +487,12 @@ The abstract provides goal, motivation, background, and conclusions of the work.
 % The text ``Contents'' is shown in the PDF bookmark. 
 \pdfbookmark[0]{Contents}{bookmark.0.contents}
 \tableofcontents
+\clearpage
+%\addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
+\clearpage
+%\addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
-\input{acronyms}
 % List of tables
 % ------------------------------------------------------------------
 % You only need a list of tables for your thesis if you have very 
@@ -515,12 +531,9 @@ The abstract provides goal, motivation, background, and conclusions of the work.
 
 \input{4methods.tex}
 
-%\input{5implementation.tex}
-
 %\input{6evaluation.tex}
  
 %\input{7discussion.tex}
-
 %\input{8conclusions.tex}
 
 
@@ -528,14 +541,19 @@ The abstract provides goal, motivation, background, and conclusions of the work.
 % ------------------------------------------------------------------
 % You can use several .bib files:
 % \bibliography{thesis_sources,ietf_sources}
+
+\clearpage
+\input{acronyms}
+\clearpage
+\addcontentsline{toc}{chapter}{Bibliography}
 \bibliography{sources}
 
 
 % Appendices go here
 % ------------------------------------------------------------------
 % If you do not have appendices, comment out the following lines
-%\appendix
-%\input{appendices.tex}
+\appendix
+\input{appendices.tex}
 
 % End of document!
 % ------------------------------------------------------------------

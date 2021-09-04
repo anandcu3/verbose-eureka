@@ -139,6 +139,7 @@
 \newcommand{\ATCITY}{}
 \newcommand{\ATABSTRACTNAME}{}
 \newcommand{\ATLOGO}{}
+\newcommand{\EITLOGO}{}
 \newcommand{\TUBLOGO}{}
 \newcommand{\ATAUTHORNAME}{}
 \newcommand{\ATKEYWORDSNAME}{}
@@ -178,6 +179,7 @@
   \renewcommand{\ATDEGREEPROG}{Master's Programme in ICT Innovation - Data Science} 
   \renewcommand{\ATABSTRACTNAME}{ABSTRACT OF MASTER'S THESIS}
   \renewcommand{\ATLOGO}{images/aalto-clean}
+  \renewcommand{\EITLOGO}{images/eit}
   \renewcommand{\TUBLOGO}{images/tub}
   \renewcommand{\ATAUTHORNAME}{Author}
   \renewcommand{\ATKEYWORDSNAME}{Keywords}
@@ -214,6 +216,7 @@
   \renewcommand{\ATDEGREEPROG}{Master's Programme in ICT Innovation - Data Science} 
   \renewcommand{\ATABSTRACTNAME}{Zusammenfassung}
   \renewcommand{\ATLOGO}{images/aalto-clean}
+  \renewcommand{\EITLOGO}{images/eit}
   \renewcommand{\TUBLOGO}{images/tub}
   \renewcommand{\ATAUTHORNAME}{Autor}
   \renewcommand{\ATKEYWORDSNAME}{Schl\"usselw\"orter}
@@ -248,7 +251,6 @@
 
 \noindent{\textbf{\AUTHOR}}
 
-
 \vskip 20mm
 
 \noindent{\textbf{\ATUNIV}\\
@@ -256,30 +258,45 @@
 \vskip 5mm
 \noindent{\textbf{\TUBUNIV}\\
 \small\TUBSCHOOL\\}
-\vskip 5mm
+\vskip 10mm
 \noindent{\ATDEGREEPROG}
 
 
-\vfill
+\vskip 15mm 
+
 {\noindent
 \small 
 \ATTHESIS \\
 \ATCITY, \ATDATE
-\vskip 2em 
+\vskip 10mm
 
-\DRAFT
 
 \small
 \noindent
-\begin{tabular}{@{}l@{\hspace{3em}}l}
+\begin{tabular}{@{}l@{\hspace{5mm}}l}
 \ATSUPERVISORNAME: & \allowlinebreaks{10cm}{%
 \ifthenelse{\isundefined{\COVERSUPERVISOR}}%
 {\ATSUPERVISOR}{\COVERSUPERVISOR}}\\
+
 \ATINSTRUCTORNAME: & \allowlinebreaks{10cm}{%
 \ifthenelse{\isundefined{\COVERINSTRUCTOR}}%
 {\ATINSTRUCTOR}{\COVERINSTRUCTOR}}\\
 \end{tabular}
 }
+\vfill
+\begin{textblock}{}(3.65,21.7)
+\noindent\includegraphics[height=2cm]{\ATLOGO}
+\end{textblock}
+
+\begin{textblock}{}(7.6,21.7)
+\noindent\includegraphics[height=2cm]{\EITLOGO}
+\end{textblock}
+
+\begin{textblock}{}(14.5,21.7)
+\noindent\includegraphics[height=2cm]{\TUBLOGO}
+\end{textblock}
+
+
 \newpage%
 }
 
@@ -295,12 +312,12 @@
 {%
 % First block sets the logo. Must be placed manually, because
 % the logo itself has huge blank areas around it.
-\begin{textblock}{10}(8,1)
-\raggedleft\noindent\includegraphics[height=2cm]{\ATLOGO}
+\begin{textblock}{10}(3.2,1)
+\raggedright\noindent\includegraphics[height=2cm]{\ATLOGO}
 \end{textblock}
 
-\begin{textblock}{10}(3,1)
-\raggedright\noindent\includegraphics[height=2.2cm]{\TUBLOGO}
+\begin{textblock}{10}(8.2,1)
+\raggedleft\noindent\includegraphics[height=2cm]{\TUBLOGO}
 \end{textblock}
 
 % Before the main abstract table there is the school name
