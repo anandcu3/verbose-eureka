@@ -1,13 +1,10 @@
 \chapter{Conclusions}
 \label{chapter:conclusions}
 
-Time to wrap it up!  Write down the most important findings from your
-work.  Like the introduction, this chapter is not very long.  One to
-two (never over three) pages might be a good limit. Still, the chapter
-gives the background, goals, content, and the findings. However, all that
-should already be in the previous chapters. This is just a summary (as
-are the abstract and the introduction).
+Deep learning has set the trend in the previous decade for automating tasks like automatic speech recognition, and data scalability is one of the paths to improve the models. Large-scale training experiments are challenging to carry out due to lack of resources and infrastructure availability, and it becomes crucial to make use of the available assets efficiently.
 
-For making PDF/A version requested by the Aalto Library, open the end result pdf file in Acrobat and store it as PDF/A. Then verify the result (everything should be fine, at least as PDF/A-2b version works).
+We introduce Business speech dataset with around 9 Million utterances and 20,000 hours in size. The dataset is quite unique considering the diverse nature of speakers in it and it two forms of speech, conversational and prepared speech in it. We present solutions which enable training models using data scales in the order of few Terabytes. Sequential access to the dataset through TAR archives is paramount even to be able to practically run experiments above 5000 hours of data. In our case, we use WebDataset to achieve this, and it also integrates nicely with PyTorch. It also supports accessing from multiple nodes, processes and to use with multiple GPUs which help us with the distributed training setups. 
 
-Congratulations, your thesis is ready and it looks beautiful!
+We use an Attention based Encoder-Decoder architecture as the default for all the experiments and compare three different types of training strategies. Synchronous training works best in our experiments and provide the best word error rates. We observed a speed-up of 2x when using 4 GPUs in data parallel mode. Hence, we can conclude that synchronous training methods are effective, especially when the hardware setup (Similar GPUs, CPUs in a multinode environment) is homogeneous in nature, so that the straggler problem becomes irrelevant. Asynchronous training methods did not fare well in our experiments, but it could improve with hyperparameter optimization focussed for that strategy of training.  Even though there was a slight improvement in convergence time, the performance metrics were considerably worse than the other methodologies. The learning curve for the asynchronous training also does not inspire confidence for the method, as it was very erratic even when the loss value was constant. 
+
+Data scalability promises high performance, but also comes with its challenges. As the scale of the data increases, the chances of data having inconsistencies also go up. This is hard to keep track of, especially manually. In this particular thesis, we try to provide an ideal workflow required to store and process data for training jobs and then to get maximum efficiency of resources available by enabling usage of parallelization techniques involving multiple GPUs and processes. 

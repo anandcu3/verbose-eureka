@@ -172,6 +172,9 @@
 % pages. This is used in the example acronyms file. 
 \usepackage{longtable}
 
+%\usepackage{algorithm}
+%\usepackage{algpseudocode}
+\usepackage{algorithm2e}
 % The fancyhdr package allows you to set your the page headers 
 % manually, and allows you to add separator lines and so on. 
 % Check the package documentation. 
@@ -251,7 +254,7 @@
 % set a bit later on, after the thesis setup.   
 
 
-\usepackage[toc,acronym, nonumberlist]{glossaries}
+\usepackage[toc,acronym, nonumberlist, nogroupskip]{glossaries}
 
 \makeglossaries
 % Thesis setup
@@ -531,10 +534,10 @@ The abstract provides goal, motivation, background, and conclusions of the work.
 
 \input{4methods.tex}
 
-%\input{6evaluation.tex}
+\input{6evaluation.tex}
  
-%\input{7discussion.tex}
-%\input{8conclusions.tex}
+\input{7discussion.tex}
+\input{8conclusions.tex}
 
 
 % Load the bibliographic references

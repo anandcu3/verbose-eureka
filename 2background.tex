@@ -106,7 +106,7 @@ The architecture of a general \acrshort{cnn} is alternating layers of convolutio
   \end{center}
 \end{figure}
 
-More recently, convolutional neural networks have become popular for end to end speech recognition applications as well. \cite{Zhang2017VeryRecognition} The focus is on using convolutional layers along with a recurrent neural network. Unlike a typical \acrshort{rnn} with a fully connected layer, these networks replace it with a convolution layer because it is better at using the input topology to produce the required output. These neural networks which are a combination of convolutional layers and a recurrent network are hence termed as \emph{Convolutional Recurrent Deep Neural Network (CRDNN)}. 
+More recently, convolutional neural networks have become popular for end to end speech recognition applications as well. \cite{Zhang2017VeryRecognition} The focus is on using convolutional layers along with a recurrent neural network. Unlike a typical \acrshort{rnn} with a fully connected layer, these networks replace it with a convolution layer because it is better at using the input topology to produce the required output. These neural networks which are a combination of convolutional layers and a recurrent network are hence termed as \acrfull{crdnn}. 
 
 \subsection {Listen, Attend and Spell (LAS)}
 Encoder-decoder type architecture models have become extremely popular over the last few years and one of the variations in this branch of neural networks are the attention-based models. \cite{Vaswani2017AttentionNeed,  Prabhavalkar2017ARecognition} \acrfull{las} models are a combination of two sub-modules: the Listener module and the Attend-Speller module. The listener is an acoustic model encoder which converts the input signal to an embedding representation. The Attend-Speller module acts as a decoder module and takes the embeddings generated to produce a probability distribution for the output character sequences. \cite{Zhang2017VeryRecognition, Chan2016ListenRecognition}
@@ -138,9 +138,9 @@ $$
 
 This defined the end to end nature of the \acrshort{las} models because it generates a probability distribution for the output characters sequence right from the input signal. 
 
-\subsubsection{Connectionist Temporal Classification}
+\subsubsection{Connectionist Temporal Classification (CTC)}
 \label{section:ctc}
-The connectionist temporal classification criteria is a way of training end-to-end models when the target sequence and the input sequence do not match exactly in length. It eliminates the need to align the target labels on a frame to frame basis with the input training signal. 
+The \acrshort{ctc} criteria is a way of training end-to-end models when the target sequence and the input sequence do not match exactly in length. It eliminates the need to align the target labels on a frame to frame basis with the input training signal. 
 
 From the previous encoder-decoder architecture, the difference is that the conditional probability of the output character at each time step, the encoder output embeddings $\mathbf{h}$, are then fed to a softmax layer which considers the whole set of blank-augmented output symbols to predict a probability distribution output similar in nature to the typical encode decoder output.
 
