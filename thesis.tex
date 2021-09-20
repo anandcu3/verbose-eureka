@@ -430,13 +430,19 @@
 % ------------------------------------------------------------------
 %\addcontentsline{toc}{chapter}{Abstract in English}
 \thesisabstract{english}{
-The abstract provides goal, motivation, background, and conclusions of the work. It has to fit to one page together with the bibliographical information. If the thesis is in English and the language of school education is Finnish or Swedish, the abstract is written in English and in Finnish or in Swedish. If the language of school education is other than Finnish or Swedish, the abstract is written in English only. The thesis example file (\texttt{thesis-example.tex}), all the chapter content files (\texttt{1introduction.tex} and so on), and the Aalto style file (\texttt{aalto-thesis.sty}) are commented with explanations on how the Aalto thesis works. The files also contain some examples on how to customize various details of the thesis layout, and of course the example text works as an example in itself. Please read the comments and the example text; that should get you well on your way! In the thesis template, you can find the text of the abstract in the abstract in the \texttt{thesis-example.tex} file, together with the bibliographical information of the abstract tables. \fixme{This is an example how to use fixme: add your abstract here.}  Fixme is a command that helps you identify parts of your thesis that still require some work.
+Automatic Speech Recognition (ASR) is the task of converting speech signal into text. This thesis focuses on scaling up the training of end to end speech recognition neural networks to enable using large datasets to train them. The main focus of the thesis is to provide guidelines for building a pipeline to increase efficiency in data storing, data loading and training. 
+
+This work uses a dataset with around 26,000 hours that is relatively new for speech to text experiments. The experiments start with exploring the steps taken to make this dataset usable for speech recognition. Then, two types of distributed training algorithms, synchronous and asynchronous training, are applied which enables the usage of multiple GPUs for stochastic gradient descent. This reduces the time taken for models to converge and comparison of the different methods show that for the experiment setup employed in this work, synchronous training provides the best word error rate of 10.87\% and this run converged in 32 hours using 4 GPUs in parallel. 
 }
 
 %\addcontentsline{toc}{chapter}{Abstract in German}
 % Abstract in Finnish
 % ------------------------------------------------------------------
 \thesisabstract{german}{
+Automatische Spracherkennung (ASR) ist die Aufgabe der Umwandlung von Sprachsignalen in Text. Diese Arbeit befasst sich mit der Skalierung des Trainings von neuronalen Netzen f\"ur die End-to-End-Spracherkennung, um die Verwendung gro\ss{}er Datens\"atze zum Training zu erm\"oglichen. Der Schwerpunkt der Arbeit liegt auf der Erstellung von Richtlinien f\"ur den Aufbau einer Pipeline zur Steigerung der Effizienz bei der Datenspeicherung, dem Laden von Daten und dem Training. 
+
+In dieser Arbeit wird ein Datensatz mit etwa 26.000 Stunden verwendet, der relativ neu f\"ur Experimente mit Sprache zu Text ist. Die Experimente beginnen mit der Untersuchung der Schritte, die unternommen wurden, um diesen Datensatz f\"ur die Spracherkennung nutzbar zu machen. Dann werden zwei Arten von verteilten Trainingsalgorithmen, synchrones und asynchrones Training, angewandt, die die Verwendung mehrerer GPUs f\"ur stochastischen Gradientenabstieg erm\"oglichen. Dadurch wird die Konvergenzzeit der Modelle verk\"urzt. Der Vergleich der verschiedenen Methoden zeigt, dass das synchrone Training f\"ur den in dieser Arbeit verwendeten Versuchsaufbau die beste Wortfehlerrate von 10,87\% liefert und dieser Lauf in 32 Stunden konvergierte unter Verwendung von 4 GPUs parallel.
+
 \"a \"A, \"O, \"U, \"a, \"o, \"u and \ss{} 
 
 }
@@ -538,7 +544,6 @@ The abstract provides goal, motivation, background, and conclusions of the work.
  
 \input{7discussion.tex}
 \input{8conclusions.tex}
-
 
 % Load the bibliographic references
 % ------------------------------------------------------------------
