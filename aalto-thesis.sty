@@ -182,10 +182,10 @@
   \renewcommand{\EITLOGO}{images/eit}
   \renewcommand{\TUBLOGO}{images/tub}
   \renewcommand{\ATAUTHORNAME}{Author}
-  \renewcommand{\ATKEYWORDSNAME}{Keywords}
+  \renewcommand{\ATKEYWORDSNAME}{Keywords:}
   \renewcommand{\ATKEYWORDS}{\KEYWORDS}
   \renewcommand{\ATPAGESNAME}{Pages}
-  \renewcommand{\ATLANGUAGENAME}{Language}
+  \renewcommand{\ATLANGUAGENAME}{Language:}
   \renewcommand{\ATLANGUAGE}{\LANGUAGE}
   \renewcommand{\ATPROFSHIPNAME}{Major}
   \renewcommand{\ATMINORNAME}{Minor}
@@ -219,11 +219,12 @@
   \renewcommand{\EITLOGO}{images/eit}
   \renewcommand{\TUBLOGO}{images/tub}
   \renewcommand{\ATAUTHORNAME}{Autor}
-  \renewcommand{\ATKEYWORDSNAME}{Schl\"usselw\"orter}
+  %\renewcommand{\ATKEYWORDSNAME}{Schl\"usselw\"orter}
+  \renewcommand{\ATKEYWORDSNAME}{}
   \renewcommand{\ATKEYWORDS}{\FKEYWORDS}
   \renewcommand{\ATPAGESNAME}{Seiten}  
-  \renewcommand{\ATLANGUAGE}{\FLANGUAGE}
-  \renewcommand{\ATLANGUAGENAME}{Sprache}
+  \renewcommand{\ATLANGUAGE}{Englisch}
+  \renewcommand{\ATLANGUAGENAME}{Sprache:}
   \renewcommand{\ATPROFSHIPNAME}{Haupt}
   \renewcommand{\ATMINORNAME}{Unerheblich}
   \renewcommand{\ATPROFCODENAME}{Koodi}
@@ -348,7 +349,7 @@
 \textbf{\ATPROFSHIPNAME:} & \ATPROFSHIP & 
 \textbf{\ATPROFCODENAME:} & \PROFCODE\\
 \textbf{\ATMINORNAME:} & \ATMINOR & 
- & \\
+\textbf{\ATLANGUAGENAME} & \ATLANGUAGE\\
 \hline
 \multicolumn{4}{|l|}{\textbf{Aalto Student Number:} 765837}\\
 \multicolumn{4}{|l|}{\textbf{TU Berlin Marticulation Number:} 0453065}\\
@@ -357,6 +358,8 @@
 \multicolumn{3}{l|}{\allowlinebreaks{11cm}{\ATSUPERVISOR}}\\
 \textbf{\ATINSTRUCTORNAME:} & 
 \multicolumn{3}{l|}{\allowlinebreaks{11cm}{\ATINSTRUCTOR}}\\
+
+\textbf{\ATKEYWORDSNAME} & \multicolumn{3}{p{11cm}|}{\ATKEYWORDS}\\
 \hline
 \multicolumn{4}{|l|}{\allowlinebreaks{14.5cm}{%
 % The abstract text is here
@@ -364,10 +367,6 @@
 \setlength{\parskip}{1ex}%
 #2%
 }}\\
-\hline
-\textbf{\ATKEYWORDSNAME:} & \multicolumn{3}{p{11cm}|}{\ATKEYWORDS}\\
-\hline
-\textbf{\ATLANGUAGENAME:} & \multicolumn{3}{l|}{\ATLANGUAGE}\\
 \hline
 \end{tabularx}
 \end{textblock}}

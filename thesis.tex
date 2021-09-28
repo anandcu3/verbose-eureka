@@ -129,7 +129,7 @@
 % ------------------------------------------------------------------
 % Select those packages that you need for your thesis. You may delete
 % or comment the rest.
-
+\usepackage{tipa}
 % Natbib allows you to select the format of the bibliography references.
 % The first example uses numbered citations: 
 \usepackage[square,sort&compress,numbers]{natbib}
@@ -299,8 +299,8 @@
   Prof. Sebastian M\"oller}
 
 % If you have only one instructor, just write one name here
-\newcommand{\INSTRUCTOR}{Aku Rouhe M.Sc., Aalto University}
-\newcommand{\FINSTRUCTOR}{Aku Rouhe M.Sc., Aalto University}
+\newcommand{\INSTRUCTOR}{Aku Rouhe M.Sc.}
+\newcommand{\FINSTRUCTOR}{Aku Rouhe M.Sc.}
 % If you have two instructors, separate them with \\ to create linefeeds
 % \newcommand{\INSTRUCTOR}{Oili Ohjaaja M.Sc. (Tech.)\\
 %  Elli Opas M.Sc. (Tech)}
@@ -332,7 +332,7 @@
 \newcommand{\FMINOR}{Innovation \& Unternehmertum}
 
 \newcommand{\KEYWORDS}{Speech Recognition, Deep Learning, Large-scale, Multi-GPU training, Hogwild, Data Parallel, Attention Models, Recurrent Neural Networks, SpeechBrain, PyTorch}
-\newcommand{\FKEYWORDS}{Spracherkennung, Deep Learning, gro\ss{} angelegt, Multi-GPU training, Hogwild, Datenparallel, Aufmerksamkeitsmodelle, wiederkehrende neuronale Netze, SpeechBrain, PyTorch}
+\newcommand{\FKEYWORDS}{}
 %\newcommand{\FKEYWORDS}{aineistot, aitta, akustiikka, Alankomaat,
 %aluerakentaminen, aapinen, ankka, aasinsilta}
 %\newcommand{\SKEYWORDS}{omsättning, kassaflöde, värdepappersmarknadslagen,
@@ -417,10 +417,6 @@
 \coverpage{english}
 
 \cleardoublepage
-\input{quote}
-\cleardoublepage
-\input{acknowledgements}
-\cleardoublepage
 % Abstracts
 % ------------------------------------------------------------------
 % Include an abstract in the language that the thesis is written in,
@@ -429,24 +425,20 @@
 % Abstract in English
 % ------------------------------------------------------------------
 %\addcontentsline{toc}{chapter}{Abstract in English}
-\thesisabstract{english}{
-Automatic Speech Recognition (ASR) is the task of converting speech signal into text. This thesis focuses on scaling up the training of end to end speech recognition neural networks to enable using large datasets to train them. The main focus of the thesis is to provide guidelines for building a pipeline to increase efficiency in data storing, data loading and training. 
-
-This work uses a dataset with around 26,000 hours that is relatively new for speech to text experiments. The experiments start with exploring the steps taken to make this dataset usable for speech recognition. Then, two types of distributed training algorithms, synchronous and asynchronous training, are applied which enables the usage of multiple GPUs for stochastic gradient descent. This reduces the time taken for models to converge and comparison of the different methods show that for the experiment setup employed in this work, synchronous training provides the best word error rate of 10.87\% and this run converged in 32 hours using 4 GPUs in parallel. 
+\thesisabstract{english}{Automatic Speech Recognition (ASR) is the task of converting speech signal into text. To enable usage of large datasets to train the end to end speech recognition neural networks, we build a pipeline for increasing efficiency in data storing, data loading and training. We train an attention based sequence-to-sequence model and use word error rates for evaluating the experiments. The time to reach benchmark accuracy is another important metric used to compare the training efficiency of different systems. This work uses a dataset with around 26,000 hours that is new for speech to text experiments. The dataset consists of conference calls with a diverse set of speakers. Around half of the data has a presentation style audio, while the other half contains conversational language. First, the work focuses on the steps taken to make this dataset efficient for speech recognition. Then, two types of distributed training algorithms, synchronous and asynchronous training, are applied which enables the usage of multiple GPUs for stochastic gradient descent. The comparison of the different methods show that for the experiment setup employed in this work, synchronous training provides the best word error rate of 10.87\%. This run converged in 32 hours using 4 GPUs in parallel, which is a speed-up of 2x compared to the single GPU training job to reach the benchmark word error rate. Batch size plays an important role in the results that are reported and discussed. The experiment results also show that increasing the scale of the data, reduces the overall training time, and hence using larger datasets is beneficial even when obtaining quicker training results is an important criterion.
 }
 
 %\addcontentsline{toc}{chapter}{Abstract in German}
 % Abstract in Finnish
 % ------------------------------------------------------------------
-\thesisabstract{german}{
-Automatische Spracherkennung (ASR) ist die Aufgabe der Umwandlung von Sprachsignalen in Text. Diese Arbeit befasst sich mit der Skalierung des Trainings von neuronalen Netzen f\"ur die End-to-End-Spracherkennung, um die Verwendung gro\ss{}er Datens\"atze zum Training zu erm\"oglichen. Der Schwerpunkt der Arbeit liegt auf der Erstellung von Richtlinien f\"ur den Aufbau einer Pipeline zur Steigerung der Effizienz bei der Datenspeicherung, dem Laden von Daten und dem Training. 
+\thesisabstract{german}{Automatische Spracherkennung (ASR) ist die Aufgabe der Umwandlung von Sprachsignalen in Text. Um die Verwendung gro\ss{}er Datens\"atze f\"ur das Training neuronaler Netze f\"ur die durchg\"angige Spracherkennung zu erm\"oglichen, bauen wir eine Pipeline zur Steigerung der Effizienz bei der Datenspeicherung, dem Laden von Daten und dem Training. Wir trainieren ein aufmerksamkeitsbasiertes Sequenz-zu-Sequenz-Modell und verwenden Wortfehlerraten zur Auswertung der Experimente. Die Zeit bis zum Erreichen der Benchmark-Genauigkeit ist eine weitere wichtige Kennzahl, um die Trainingseffizienz verschiedener Systeme zu vergleichen. In dieser Arbeit wird ein Datensatz mit rund 26.000 Stunden verwendet, der f\"ur Experimente mit Sprache zu Text neu ist. Der Datensatz besteht aus Konferenzgespr\"achen mit einer Vielzahl von Sprechern. Etwa die H\"alfte des Datensatzes besteht aus Audio im Pr\"asentationsstil, w\"ahrend die andere H\"alfte Konversationssprache enth\"alt. Die Arbeit konzentriert sich zun\"achst auf die Schritte, die unternommen wurden, um diesen Datensatz f\"ur die Spracherkennung effizient zu machen. Dann werden zwei Arten von verteilten Trainingsalgorithmen, synchrones und asynchrones Training, angewandt, welche die Verwendung mehrerer GPUs zum stochastischen Gradientenabstieg erm\"oglichen. Der Vergleich der verschiedenen Methoden zeigt, dass f\"ur den in dieser Arbeit verwendeten Versuchsaufbau das synchrone Training die beste Wortfehlerrate von 10,87\% liefert. Dieser Durchlauf konvergierte in 32 Stunden unter Verwendung von 4 GPUs parallel, was eine Geschwindigkeitssteigerung um das Zweifache im Vergleich zu einem einzelnen GPU-Trainingsjob bedeutet, um die Benchmark-Wortfehlerrate zu erreichen. Die Ergebnisse des Experiments zeigen auch, dass eine Erh\"ohung der Datenmenge die Gesamttrainingszeit verk\"urzt und daher die Verwendung gr\"o\ss{}erer Datens\"atze von Vorteil ist, selbst wenn die Erzielung schnellerer Trainingsergebnisse ein wichtiges Kriterium ist.}
 
-In dieser Arbeit wird ein Datensatz mit etwa 26.000 Stunden verwendet, der relativ neu f\"ur Experimente mit Sprache zu Text ist. Die Experimente beginnen mit der Untersuchung der Schritte, die unternommen wurden, um diesen Datensatz f\"ur die Spracherkennung nutzbar zu machen. Dann werden zwei Arten von verteilten Trainingsalgorithmen, synchrones und asynchrones Training, angewandt, die die Verwendung mehrerer GPUs f\"ur stochastischen Gradientenabstieg erm\"oglichen. Dadurch wird die Konvergenzzeit der Modelle verk\"urzt. Der Vergleich der verschiedenen Methoden zeigt, dass das synchrone Training f\"ur den in dieser Arbeit verwendeten Versuchsaufbau die beste Wortfehlerrate von 10,87\% liefert und dieser Lauf in 32 Stunden konvergierte unter Verwendung von 4 GPUs parallel.
+% \"a \"A, \"O, \"U, \"o, \"u and \ss{} 
+\cleardoublepage
 
-\"a \"A, \"O, \"U, \"a, \"o, \"u and \ss{} 
-
-}
-
+\cleardoublepage
+\input{quote}
+\input{acknowledgements}
 \cleardoublepage
 \input{declaration}
 % Abstract in Swedish
@@ -520,6 +512,9 @@ In dieser Arbeit wird ein Datensatz mit etwa 26.000 Stunden verwendet, der relat
 \label{pages-prelude}
 \cleardoublepage
 
+\input{acronyms}
+\clearpage
+
 %%%%%%%%%%%%%%%%% The main content starts here %%%%%%%%%%%%%%%%%%%%%
 % ------------------------------------------------------------------
 % This command is defined in aalto-thesis.sty. It controls the page 
@@ -551,11 +546,8 @@ In dieser Arbeit wird ein Datensatz mit etwa 26.000 Stunden verwendet, der relat
 % \bibliography{thesis_sources,ietf_sources}
 
 \clearpage
-\input{acronyms}
-\clearpage
 \addcontentsline{toc}{chapter}{Bibliography}
 \bibliography{sources}
-
 
 % Appendices go here
 % ------------------------------------------------------------------
