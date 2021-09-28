@@ -38,7 +38,7 @@ Applying the Bayes rule on, $P(\boldsymbol{W} \mid \boldsymbol{O})$ we end up wi
 
 \subsection{End to end speech recognition systems}
 \label{section:e2easr}
-In end to end speech recognition systems, a single model, usually based on deep learning, supersedes the hybrid \acrshort{asr} system stages. A deep learning model combined with an external language model can achieve higher performance than hybrid speech pipelines for particular applications \cite{Deshmukh2020ComparisonRecognition}. These systems rely on large neural networks and as the size of the network grows and has millions of parameters that needs to be trained, they require large amounts of speech data to be trained well. Smaller models with lesser number of parameters can be trained with lesser amounts of data, but may fail to generalize well\cite{Tanaka2021End-to-EndLearning}. Since the system learns the whole task end-to-end, specialized components for capturing finer details of the speaker or other noise filtering components are not essential. On the contrary, previous experiments have shown that end to end models stand out in the cases where robustness is crucial\cite{Hannun2014DeepRecognition}. 
+In end to end speech recognition systems, a single model, usually based on deep learning, replaces the hybrid \acrshort{asr} system stages. A deep learning model combined with an external language model can achieve higher performance than hybrid speech pipelines for particular applications \cite{Deshmukh2020ComparisonRecognition}. These systems rely on large neural networks, and as the size of the network grows and has millions of parameters, they require larger amounts of speech data to be trained well. Smaller models with lesser number of parameters can be trained with smaller amounts of data, but may fail to generalize well\cite{Tanaka2021End-to-EndLearning}. Since the system learns the whole task end-to-end, specialized components for capturing finer details of the speaker or other noise filtering components are not essential. On the contrary, previous experiments have shown that end to end models stand out in the cases where robustness is crucial\cite{Hannun2014DeepRecognition}. 
 
 \section{What are Deep Neural Networks?}
 A deep neural network is a neural network with many hidden layers. Deep neural networks can be trained to model non-linear models and functions for very high dimensional data \cite{Hammer2003AMachines}. Traditionally, it was quite challenging to train deep neural networks, but there was a resurgence in the usage of deep neural networks in the previous decade, also in the field of speech recognition \cite{Dahl2012Context-DependentRecognition, Morgan2012DeepRecognition, Deng2013RECENTMICROSOFT, Hannun2014DeepRecognition}. 
@@ -54,18 +54,18 @@ One of the first deep neural network was a \acrfull{mlp}, which consists of an i
   \end{center}
 \end{figure}
 
-Each layer of this network consists of multiple neurons, and each of these neurons can be represented using a vector, and all the neuronal connections in a layer can then be represented using a weights matrix that determines how much a neuron should take part in the decision-making process. At each neuron, multiply the input signal with its corresponding weights and then added to have a weighed sum as the output of a layer. This can be represented as,
+Each layer of this network consists of multiple neurons, and each of these neurons can be represented using a vector, and all the neuronal connections in a layer can then be represented using a weights matrix that determines how much a neuron should take part in the decision-making process. At each layer, multiply the input signal with its corresponding weights and then add them up to obtain a weighed sum as the output of a layer. This can be represented as,
 
 \[ z = w_1x_1 + w_2x_2 + .. + w_nx_n \]
 
 In the above formula $z$ is the weighted sum output, $w$ is the weight, $x$ is an input and there are $n$ number of inputs. An activation function like tanh, sigmoid, ReLU, etc is applied to the weighted sum to get the output of the layer. 
 
 \subsection{Model training}
-Training of deep learning models use the input labelled data, split to train, validation and test splits. The model gradually learns to predict the labels of training data by adjusting the model weights based on the error. The validation split of the data is used to measure the accuracy on unseen data, periodically, during the training process. The test split, also unseen by the model, is not used during the process of training and used for evaluation of the different models after training them. The
+Training of deep learning models use labelled data, split to train, validation and test splits. The model gradually learns to predict the labels of training data by adjusting the model weights based on the error. The validation split of the data is used to measure the accuracy of unseen data, periodically, during the training process. The test split, also unseen by the model, is not used during the process of training and used for evaluation of the different models after training them. The
 most important metric studied is on the test data split \cite{Koliousis2019CROSSBOW:Servers}.
 
 Let $w$ be a vector of model weights, and $x (w)$ be a loss function such that when given $y$, the ground truth and the predicted label $x$, measures the difference between them. Model training is an optimization problem that finds the best $w$ which minimizes the average loss over training data. In practice, this is accomplished using
-\acrfull{sgd} \cite{Robbins1951AMethod}, an iterative algorithm that adapts $w$ based on a few training samples at a time.
+\acrfull{sgd} \cite{Robbins1951AMethod}, an iterative algorithm that adapts $w$ using a few training samples at a time.
 
 \begin{equation}
 \label{eq:sgd}
@@ -79,10 +79,10 @@ $$
 
 The whole training process hence happens in two stages. First, a batch of labelled data propagates forward through the model to compute the output. This is compared to the ground-truth, measuring the loss value. Then, the error propagates backwards from the last layer to the first layer. This error is used to compute the gradient for the weights in each layer, and the weights can then be updated incrementally by applying Equation \ref{eq:sgd}.
 
-When training such a deep learning model, the aim is to reduce time taken to achieve convergence with a target test accuracy results (time-to-convergence). There are two factors which can affect the time-to-accuracy \cite{Koliousis2019CROSSBOW:Servers}.
+When training such a deep learning model, the aim is to reduce time taken to achieve convergence with a target test accuracy results (time-to-benchmark). There are two factors which can affect the time-to-accuracy \cite{Koliousis2019CROSSBOW:Servers}.
 \begin{enumerate}
-    \item The number of iterations that a training algorithm such as SGD requires to find a solution with a given test accuracy (statistical efficiency). This can be done by optimizing the model architecture and improving the training data.
-    \item The execution time of each iteration (hardware efficiency). This can be done by improving and making maximum use of the computational infrastructure. 
+    \item \textbf{Statistical Efficiency:} The number of iterations that a training algorithm such as SGD requires to find a solution with a given test accuracy. This can be done by optimizing the model architecture and improving the training data.
+    \item  \textbf{Hardware Efficiency:} The execution time of each iteration. This can be done by improving and making maximum use of the computational infrastructure. 
 \end{enumerate}
 
 \emph{The focus of this thesis is hence to optimize the training by increasing the scale of data (statistical efficiency), while making maximum use of the available computational resources (hardware efficiency).} 
@@ -117,7 +117,7 @@ where the $w$ terms denote weight matrices, the $b$ terms denote bias vectors an
 The drawback of an \acrshort{rnn} is that they use only the previous output to get the current context, but for speech recognition there is value to also utilize the future states too. A more advanced variation of \acrshort{rnn} is hence a \acrfull{brnn} \cite{Schuster1997BidirectionalNetworks}, which processes the input in both directions using two hidden layers and then this used as input to a single output layer. 
 
 \subsubsection{Long Short-term Memory (LSTM)}
-The main drawback with vanilla \acrshort{rnn}s is the vanishing gradient problem, which happens because the hidden states pass through a series of \inlinecode{tanh} activation functions, which leads to gradients becoming very close to zero and the network stops training through backpropagation \cite{Hochreiter1997LongMemory}. A \acrfull{lstm} cell \cite{Hochreiter1997LongMemory} modifies the \acrshort{rnn} architecture by passing another state vector to the next time step, along with the hidden state. The cell state variable enables the useful long term-based information to be preserved because this is modified only when there is new information. To control the cell state, gates which multiply a signal that is a continuous value ranging between 0 and 1. Each gate has a weight matrix which are trained by iterating over the input data. The original work use two gates which are "input" gate, which control what information is essential and hence adds to the current state, and "output" gate which control what information needs to be written to the hidden state. More recently, a third gate called a "forget" gate controls deleting the unwanted information  from the cell state to stop cells growing in a boundless manner \cite{Gers2000LearningLSTM}.
+The main drawback with vanilla \acrshort{rnn}s is the vanishing gradient problem, which happens because the hidden states pass through a series of \inlinecode{tanh} activation functions, which leads to gradients becoming very close to zero and the network stops training through backpropagation \cite{Hochreiter1997LongMemory}. A \acrfull{lstm} cell \cite{Hochreiter1997LongMemory} modifies the \acrshort{rnn} architecture by passing another state vector to the next time step, along with the hidden state. The cell state variable enables the useful long term-based information to be preserved because this is modified only when there is new information. To control the cell state, gates which multiply a signal that is a continuous value ranging between 0 and 1 are used. Each gate has a weight matrix which are trained by iterating over the input data. The original work use two gates which are "input" gate, which control what information is essential and hence adds to the current state, and "output" gate which control what information needs to be written to the hidden state. More recently, a third gate called a "forget" gate controls deleting unwanted information from the cell state to stop cells growing in a boundless manner \cite{Gers2000LearningLSTM}.
 
 \begin{figure}[ht]
   \begin{center}
@@ -128,13 +128,13 @@ The main drawback with vanilla \acrshort{rnn}s is the vanishing gradient problem
   \end{center}
 \end{figure}
 
-Figure \ref{fig:lstm} shows the architecture of an \acrshort{lstm} layer with all the three gates. The three gates take in identical input, which also depends on how the definition of the network. In most cases, the input to \acrshort{lstm} cell is the combination of the hidden state of the previous time step ($c_{t-1}$) and the output of the previous layer. Each gate contains 2 weight matrices, one each for the two inputs, and a bias vector. (Figure \ref{fig:lstm} shows only a weight matrix per gate.) 
+Figure \ref{fig:lstm} shows the architecture of an \acrshort{lstm} layer with all the three gates. The three gates take in identical input, which also depends on the definition of the network. In most cases, the input to \acrshort{lstm} cell is the combination of the hidden state of the previous time step ($c_{t-1}$) and the output of the previous layer. Each gate contains 2 weight matrices, one each for the two inputs, and a bias vector. (Figure \ref{fig:lstm} shows only a weight matrix per gate.) 
 
 
 \subsection {Convolutional Neural Networks}
-\acrfull{cnn} is a branch of neural networks, which are hierarchical in nature and rely on convolution operations to process input. This helps to process data for tasks which can use spatial information by sharing the weights across the inputs. Hence, \acrshort{cnn}s  are especially powerful for performing tasks like image classification, object detection, etc on images and videos. \acrshort{cnn}s perform well when spatial features are important to perform the given task \cite{Krizhevsky2012ImageNetNetworks}.
+\acrfull{cnn} is a branch of deep neural networks, which are hierarchical in nature and rely on convolution operations to process input. This helps to process data for tasks which can use spatial information by sharing the weights across the inputs. Hence, \acrshort{cnn}s  are especially powerful for performing tasks like image classification, object detection, etc on images and videos. \acrshort{cnn}s perform well when spatial features are important to perform the given task \cite{Krizhevsky2012ImageNetNetworks}.
 
-The architecture of a general \acrshort{cnn} is alternating layers of convolution with subsampling layers \cite{Ciresan2011FlexibleClassification}. The convolution layer has the parameters by size, kernel size, skipping factors and inter connections between the layers which are tuned to achieve high performance. Figure \ref{fig:cnn} shows the architecture of AlexNet, one of the most popular \acrshort{cnn}s for image classification \cite{Krizhevsky2012ImageNetNetworks}. The architecture consists of convolutional layers altered with max pooling layers which act as sub sampling layers. The last layer of the network is using a fully connected layer to reduce the final dimensionality to match the required output shape.
+The architecture of a general \acrshort{cnn} is alternating layers of convolution with subsampling layers \cite{Ciresan2011FlexibleClassification}. Figure \ref{fig:cnn} shows the architecture of AlexNet, one of the most popular \acrshort{cnn}s for image classification \cite{Krizhevsky2012ImageNetNetworks}. The architecture consists of convolutional layers altered with max pooling layers which act as sub sampling layers. The last layer of the network is using a fully connected layer to reduce the final dimensionality to match the required output shape.
 \begin{figure}[ht]
   \begin{center}
     % below the size of the figure has been reduced for example
@@ -144,10 +144,10 @@ The architecture of a general \acrshort{cnn} is alternating layers of convolutio
   \end{center}
 \end{figure}
 
-More recently, convolutional neural networks have become popular for end to end speech recognition applications as well \cite{Zhang2017VeryRecognition}. The focus is on using convolutional layers along with a recurrent neural network. Unlike a typical \acrshort{rnn} with a fully connected layer, these networks replace it with a convolution layer because it is better at using the input topology to produce the required output. These neural networks which are a combination of convolutional layers and a recurrent network are hence termed as \acrfull{crdnn}. 
+More recently, convolutional neural networks have become popular for end to end speech recognition applications as well \cite{Zhang2017VeryRecognition}. The idea is to use convolutional layers along with a recurrent neural network. Unlike a typical \acrshort{rnn} with a fully connected layer, these networks replace it with a convolution layer because it is better at using the input topology to produce the output. These neural networks which are a combination of convolutional layers and a recurrent network are hence termed as \acrfull{crdnn}. 
 
 \subsection {Atteniton-based Encoder Decoder (AED)}
-Encoder-decoder type architecture models have become extremely popular over the last few years, and one of the variations in this branch of neural networks are the attention-based models \cite{Prabhavalkar2017ARecognition}. \acrfull{aed} models are a combination of two sub-modules: the Encoder module and the Decoder module. The encoder is an acoustic model which converts the input signal to an embedding representation. The decoder module takes the embeddings generated to produce a probability distribution for the output character sequences \cite{Zhang2017VeryRecognition, Chan2016ListenRecognition}.
+Encoder-decoder type architecture models have become extremely popular over the last few years, and one of the variations in this branch of neural networks are the attention-based models \cite{Prabhavalkar2017ARecognition}. \acrfull{aed} models are a combination of two submodules: the Encoder module and the Decoder module. The encoder is an acoustic model which converts the input signal to an embedding representation. The decoder module takes the embeddings generated to produce a probability distribution for the output character sequences \cite{Zhang2017VeryRecognition, Chan2016ListenRecognition}.
 
 \begin{figure}[ht]
   \begin{center}
@@ -174,7 +174,7 @@ $$
 P(\mathbf{y} \mid \mathbf{x})=\prod_{i} P\left(y_{i} \mid \mathbf{x}, y_{<i}\right)
 $$
 
-This defined the end to end nature of the \acrshort{aed} models because it generates a probability distribution for the output characters sequence right from the input signal. 
+This defines the end to end nature of the \acrshort{aed} models because it generates a probability distribution for the output characters sequence right from the input signal. 
 
 \acrshort{aed} models output character scores for each sequence, and since datasets usually do not have character level alignments for speech data and their transcription. Training speech recognizers can become harder to train, than what it initially seems. To solve this issue, we use Connectionist Temporal Classification (CTC) loss to train \acrshort{aed} model.
 
@@ -187,7 +187,7 @@ From the previous encoder-decoder architecture, the difference is that the condi
 
 \section{SpeechBrain Toolkit}
 \label{section:sb}
-Speech recognition have always been driven forward due to the critical role played by open-source toolkits such as HTK \cite{Young2002TheBook}, Kaldi \cite{Povey2011TheToolkit}, etc. More recently, general purpose deep learning frameworks like TensorFlow \cite{Abadi2016TensorFlow:Systems} and PyTorch \cite{Paszke2019PyTorch:Library} have become useful for speech recognition tasks and this has led to newer toolkits like ESPNet \cite{Watanabe2018ESPnet:Toolkit}. SpeechBrain \cite{Ravanelli2021SpeechBrain:Toolkit} is a toolkit designed to be flexible and used for multiple tasks to speed up research and development of speech related technologies.  SpeechBrain is a PyTorch-based toolkit and equipped to perform multiple tasks at once like recognize speech, understand its content, emotion, language, and speakers. 
+Speech recognition has always been driven forward due to the critical role played by open-source toolkits such as \acrshort{htk} \cite{Young2002TheBook}, Kaldi \cite{Povey2011TheToolkit}, etc. More recently, general purpose deep learning frameworks like TensorFlow \cite{Abadi2016TensorFlow:Systems} and PyTorch \cite{Paszke2019PyTorch:Library} have become useful for speech recognition tasks and this has led to newer toolkits like \acrshort{espnet} \cite{Watanabe2018ESPnet:Toolkit}. SpeechBrain \cite{Ravanelli2021SpeechBrain:Toolkit} is a toolkit designed to be flexible and used for multiple tasks to speed up research and development of speech related technologies.  SpeechBrain is a PyTorch-based toolkit and equipped to perform multiple tasks at once like recognize speech, understand its content, emotion, language, and speakers. 
 
 \subsection{Brain class}
 The SpeechBrain's core functionalities revolve around the \inlinecode{Brain} class, which defines a general training loop. The \inlinecode{Brain.fit()} method trains the models, and the Figure \ref{fig:brain} shows the basic components of the method. 
@@ -204,7 +204,7 @@ Training of most \acrshort{dnn} models can be completed with a few lines of code
 \begin{verbatim} python train.py train.yaml\end{verbatim}
 
 \subsection{HyperPyYAML}
-The configuration file is in YAML format which is human-readable and can be used to define the model architecture, the data files, the parameters of the model, hyperparameters for training and other characteristics of the pipeline. SpeechBrain utilities HyperPyYAML \footnote{speechbrain/HyperPyYAML:  Extensions  to  YAML  syntax  for  better python interaction. \href{https://github.com/speechbrain/HyperPyYAML}{https://github.com/speechbrain/HyperPyYAML} } which makes several extensions to the default YAML file format. The most important addition out of them is the easier object creation. An example:
+The configuration file is in YAML format which is human-readable and can be used to define the model architecture, the data files, the parameters of the model, hyperparameters for training and other features of the pipeline. SpeechBrain utilities HyperPyYAML \footnote{speechbrain/HyperPyYAML:  Extensions  to  YAML  syntax  for  better python interaction. \href{https://github.com/speechbrain/HyperPyYAML}{https://github.com/speechbrain/HyperPyYAML} } which makes several extensions to the default YAML file format. The most important addition out of them is the easier object creation. An example:
 
 \begin{verbatim}
 epoch_counter: !new:speechbrain.utils.epoch_loop.EpochCounter
@@ -232,4 +232,4 @@ SpeechBrain extends the PyTorch's data loading to help with speech data related 
 
 SpeechBrain also supports dynamic batching and multi \acrshort{gpu} training, which are discussed in detail in Chapter 4. This enables large-scale speech recognition tasks, which is the core of the work done in this thesis.  
 
-SpeechBrain provides recipes for some of the most popular deep learning models and processing units which are used for different datasets. These can be used as is for the designed tasks, or also be modified to be used for custom tasks. This makes the development and initial bottleneck to start building ASR models is reduced.
+SpeechBrain provides recipes for some of the most popular deep learning models and processing units which are used for different datasets. These can be used as is for the designed tasks, or they can also be modified to be used for custom tasks. This makes the development easier and initial bottleneck to start building ASR models is reduced.

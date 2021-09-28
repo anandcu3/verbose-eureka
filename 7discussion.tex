@@ -1,9 +1,43 @@
 \chapter{Discussion}
 \label{chapter:discussion}
+We discuss the research problems laid out in Section \ref{section:rq} and then in Section \ref{section:future}, we go over the next steps in the research related to both the dataset and also related to the model architectures and experiments.
 
+\section{Revisiting the problem statements}
+
+\begin{enumerate}
+  \item \textbf{How to enable large-scale training tasks from an engineering point of view? What are the best  methods  to  store data, load data for such training jobs?}
+  
+  We use TAR archives to store and access data directly from them using WebDataset. This enables sequential access to training data and makes the data loading efficient and compatible with multiple workers in parallel. 
+  
+  \item \textbf{What is the effect of training data scale on the quality of the acoustic model used?}
+  
+  Increasing the scale of training data led to huge boost in \acrshort{wer} and other evaluation metrics. It raises a question of whether there is one point of performance beyond which adding more data does not help with improving the model performance. 
+  
+    \begin{enumerate}
+        \item \textbf{Does increasing the scale of training data affect the convergence time of the acoustic model?}
+        
+        Increasing the scale of training data actually led to \emph{reduction} in the training time to reach the benchmark \acrshort{wer}. This showed the effect of having diverse and large dataset to obtain better model performance.
+    \end{enumerate}
+    
+    
+  \item \textbf{How effective are the multi-\acrshort{gpu}s and multiple processing jobs to accelerate the training time and reach convergence quicker? }
+    
+    Distributed training methods helped not only to reach benchmark \acrshort{wer} quicker, but also to improve the overall performance, of the model. The effective batch size used in these experiments played a huge role in the quality of the models.
+    
+    \begin{enumerate}
+        \item \textbf{Compare synchronous and asynchronous training methods and analyse which of them are suitable for our system setup?} 
+        
+        Synchronous data parallel training method proved to be well suited for our experiment setup and worked efficiently to reduce the training time and also provided better \acrshort{wer} in than non-distributed training. In contrast, asynchronous training did not fare too well in our experiments, although this could change with further hyperparameter optimization.
+    
+    
+        \item \textbf{What is the speed-up achieved by using these methods for training an acoustic end to end model?}
+        
+        For synchronous training, a speed-up of close to 2x was observed when training with 4 GPUs in parallel.
+    \end{enumerate}
+\end{enumerate}
 
 \section{Future Work}
-
+\label{section:future}
 \subsection{Dataset related work}
 The dataset used is large and this has enabled all the experiments that we have conducted, but the dataset is not without its drawbacks and future work can be done to address some of these inconsistencies. There are phrases like "Operator Instructions" which are discussed in Section \ref{section:bizspeech} which are wrong transcriptions of what is being said in the audio, and this only came to our attention in the later stages of our experiments. Although some preprocessing steps were taken, the dataset needs more thorough cleaning to remove utterances like the above example from the dataset, which can then lead to better models.
 

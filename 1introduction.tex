@@ -7,6 +7,7 @@ Increasing the data used for training deep neural network models exposes more di
 Large dataset training jobs generally use distributed training, which means that multiple processing units are used with the data present in a network location. This introduces new problems like optimizing input/output read performance and managing local storage, etc. These are the problems regarding infrastructure and engineering related domains. Apart from these, there are also research-based problems which include convergence issues when using stochastic gradient descent in a distributed setup of training.  
 
 \section{Problem statement}
+\label{section:rq}
 The purpose of this thesis is to explore the task of large-scale speech recognition and to optimize the training jobs which enables more wide scale adaptation of scaling up datasets using for training end to end ASR models. The aim of the thesis, therefore, are as follows:
 
 \begin{enumerate}
@@ -27,4 +28,4 @@ The purpose of this thesis is to explore the task of large-scale speech recognit
 
 \section{Structure of the Thesis}
 \label{section:structure} 
-Chapter \ref{chapter:background} discusses the most essential concepts in deep learning and the network architectures used for the end to end \acrshort{asr} model. Chapter \ref{chapter:largescale} is more specific to large-scale speech recognition and its importance. It also discusses the datasets available for large-scale speech recognition. Chapter \ref{chapter:methods} explains the dataset used, and the techniques used to scale up the speech recognition task. Next, we delve into the experiments conducted and show the results in Chapter \ref{chapter:evaluation}. Chapter \ref{chapter:discussion} discusses the results and  talks about the future work for the thesis. Finally, Chapter \ref{chapter:conclusions} concludes the thesis with the most important takeaways from the work.
+Chapter \ref{chapter:background} discusses the most essential concepts in deep learning and the network architectures used for the end to end \acrshort{asr} model. Chapter \ref{chapter:largescale} is more specific to large-scale speech recognition and its importance. It also discusses the datasets available for large-scale speech recognition. Chapter \ref{chapter:methods} explains the dataset used, and the techniques used to scale up the speech recognition task. Next, we delve into the experiments conducted and show the results in Chapter \ref{chapter:evaluation}. Chapter \ref{chapter:discussion} answers the research problems and  talks about the future work for the thesis. Finally, Chapter \ref{chapter:conclusions} concludes the thesis with the most important takeaways from the work.
