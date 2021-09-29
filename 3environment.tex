@@ -94,7 +94,7 @@ Both of these architectures, are widely adopted in leading open-source deep lear
 
 A quick overview of practical considerations for different types of architecture, parallelism, and synchronization strategy can be accessed here \footnote{Distributed training with TensorFlow, TensorFlow Core. \href{https://www.tensorflow.org/guide/distributed\_training}{https://www.tensorflow.org /guide/distributed\_training} }. 
 
-\section{Related works in large-scale ASR systems}
+\section{Other Large-scale ASR datasets}
 \label{section:largescale_related}
 Large-scale speech recognition has had varying definitions even over the past few years. In 2014, authors applied data and model parallelism for training \acrshort{rnn}-based \acrshort{asr} models \cite{Hannun2014DeepRecognition}. They used 5000 hours of labelled data to build a multi-\acrshort{gpu} powered data-driven speech system which produced state-of-the-art results for that period of time. This solution was also quite robust to distortions and designed to work on both clear, conversational speech and also speech in noisy environments. The work also showed that with data parallelism on more than a few \acrshort{gpu}s, scaling up the overall batch size linearly with the number of \acrshort{gpu}s did not help with the model convergence rate.
 

@@ -1,9 +1,9 @@
 \chapter{Discussion}
 \label{chapter:discussion}
-We discuss the research problems laid out in Section \ref{section:rq} and then in Section \ref{section:future}, we go over the next steps in the research related to both the dataset and also related to the model architectures and experiments.
+We discuss the research problems laid out in Section \ref{section:rq}, and then we go over the next steps in the research related to both the dataset and also related to the model architectures and experiments in Section \ref{section:future}.
 
 \section{Revisiting the problem statements}
-
+\label{section:ans}
 \begin{enumerate}
   \item \textbf{How to enable large-scale training tasks from an engineering point of view? What are the best  methods  to  store data, load data for such training jobs?}
   
@@ -11,7 +11,7 @@ We discuss the research problems laid out in Section \ref{section:rq} and then i
   
   \item \textbf{What is the effect of training data scale on the quality of the acoustic model used?}
   
-  Increasing the scale of training data led to huge boost in \acrshort{wer} and other evaluation metrics. It raises a question of whether there is one point of performance beyond which adding more data does not help with improving the model performance. 
+  Increasing the scale of training data always led to huge boost in \acrshort{wer} and other evaluation metrics. It raises a question of whether there is one point of performance beyond which adding more data does not help with improving the model performance. 
   
     \begin{enumerate}
         \item \textbf{Does increasing the scale of training data affect the convergence time of the acoustic model?}
