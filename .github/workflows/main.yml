@@ -34,5 +34,5 @@ jobs:
       - name: Upload PDF
         uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: pdf_output
           path: thesis.pdf
