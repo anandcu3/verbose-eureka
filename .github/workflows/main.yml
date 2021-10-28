@@ -30,3 +30,9 @@ jobs:
         with:
           # The root LaTeX file to be compiled  
           root_file: thesis.tex
+          
+      - name: Upload PDF
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: path/to/artifact/world.txt
